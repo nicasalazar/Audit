@@ -1,5 +1,6 @@
-import datetime, os, json, yaml, random, uuid, requests, logging, logging.config
 from json.decoder import JSONDecodeError
+import datetime, os, json, yaml, random, uuid, requests, logging, logging.config
+
 import connexion 
 from connexion import NoContent 
 
