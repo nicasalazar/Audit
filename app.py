@@ -1,18 +1,13 @@
-from json.decoder import JSONDecodeError
-import datetime
 import os
 import json
-import random
-import uuid
 import logging
 import logging.config
-import requests
 import yaml
 import connexion 
 from connexion import NoContent 
 
 from pykafka import KafkaClient
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 
 if "TARGET_ENV" in os.environ and os.environ["TARGET_ENV"] == "test":
     print("In Test Environment")
