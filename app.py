@@ -4,9 +4,9 @@ import os
 import json
 import random
 import uuid
-import requests
 import logging
 import logging.config
+import requests
 import yaml
 import connexion 
 from connexion import NoContent 
