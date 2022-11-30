@@ -2,7 +2,6 @@ from json.decoder import JSONDecodeError
 import datetime
 import os
 import json
-import yaml
 import random
 import uuid
 import requests
