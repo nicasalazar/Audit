@@ -1,0 +1,153 @@
+---
+openapi: 3.0.0
+info:
+  title: Audit API
+  description: This API provides audit info
+  contact:
+    email: dsalazar4@my.bcit.ca
+  version: 1.0.0
+servers:
+- url: /
+paths:
+  /health:
+    get:
+      summary: gets health
+      operationId: app.health
+      description: gets health from history
+      responses:
+        '200':
+          description: 200 request
+        '404':
+          description: Not Found
+  /employee_clockin:
+    get:
+      summary: gets a employee clockin reading from history
+      description: Gets employee clockin readings from the event store
+      operationId: app.get_employee_clockin_reading
+      parameters:
+      - name: index
+        in: query
+        description: Gets the clockin at the index in the event store
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          example: 100
+      responses:
+        "200":
+          description: Successfully returned a employee clockin event
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/EmployeeClockedin'
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+  /employee_clockout:
+    get:
+      summary: gets a employee clockout reading from history
+      description: Gets employee clockout reading from the event store
+      operationId: app.get_employee_clockout_reading
+      parameters:
+      - name: index
+        in: query
+        description: Gets the clockout at the index in the event store
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: integer
+          example: 100
+      responses:
+        "200":
+          description: Successfully returned a employee clockout event
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: '#/components/schemas/EmployeeClockedout'
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        "404":
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+
+components:
+  schemas:
+    EmployeeClockedin:
+      required:
+      - device_id
+      - employee_id
+      - role
+      - timestamp
+      type: object
+      properties:
+        employee_id:
+          type: string
+          format: uuid
+          example: d701748f0851
+        device_id:
+          type: string
+          format: uuid
+          example: A12345
+        role:
+          type: string
+          example: Server
+        timestamp:
+          type: string
+          format: date-time
+          example: 2016-08-29T09:12:33.001Z
+    EmployeeClockedout:
+      required:
+      - device_id
+      - employee_id
+      - hours
+      - timestamp
+      type: object
+      properties:
+        employee_id:
+          type: string
+          format: uuid
+          example: d701748f0851
+        device_id:
+          type: string
+          example: A12345
+        hours:
+          type: integer
+          example: 8
+        timestamp:
+          type: string
+          format: date-time
+          example: 2016-08-29T09:12:33.001Z
